@@ -15,17 +15,14 @@ public class TodoUI  {
         while(!flag) {
             System.out.println("옵션을 선택하세요: 1. 추가, 2. 삭제, 3. 조회, 4. 종료");
 
-            try{
-                option = Integer.parseInt(br.readLine());
+                option = toDoManager.isNumber(br.readLine());
+                if(option == -1) continue;
 
                 if(option > 4 || option < 1){
                     System.out.println("잘못된 입력입니다.");
                     continue;
                 }
-            }catch(NumberFormatException e){
-                System.out.println("잘못된 입력입니다.");
-                continue;
-            }
+
 
             switch(option){
                 case 1: // 추가
