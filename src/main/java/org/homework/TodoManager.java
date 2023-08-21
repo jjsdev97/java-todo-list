@@ -7,41 +7,30 @@ public class TodoManager {
     private HashMap<Integer, String> toDoListMap = new HashMap<>();
 
 
-    public void addTDL(String str) {
-        toDoListMap.put(idCnt, str);
-
-        System.out.printf("할 일이 추가되었습니다. ID: %d\n", idCnt);
-
-        idCnt++;
+    public int addTDL(String str) {
+        return (toDoListMap.put(idCnt, str)==null) ? idCnt++ : -1;
     }
 
-    public void removeTDL(String str) {
-
+    public int removeTDL(String str) {
         int id = isNumber(str);
+        if(id == -1) return -1;
 
-        if(id == -1) return;
-
-
-        if (toDoListMap.remove(id) == null) {
-            System.out.println("해당 ID의 할 일이 없습니다.");
-        } else {
-            System.out.printf("할 일이 삭제되었습니다. ID: %d\n", id);
-        }
+        return (toDoListMap.remove(id) == null) ? 0 : id;
 
     }
 
-    public void selectTDL(String str) {
-
+    public String selectTDL(String str) {
+        String result = null;
         int id = isNumber(str);
-
-        if(id == -1) return;
+        if(id == -1) return null;
 
         if(toDoListMap.containsKey(id)){
-            System.out.printf("할 일 ID: %d | 내용: %s\n", id, toDoListMap.get(id));
+            result = String.format("할 일 ID: %d | 내용: %s\n", id, toDoListMap.get(id));
         }else {
-            System.out.println("해당 ID의 할 일이 없습니다.");
+            result = "해당 ID의 할 일이 없습니다.";
         }
 
+        return result;
     }
 
     public int isNumber(String inputData){
