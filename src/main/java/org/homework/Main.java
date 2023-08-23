@@ -5,9 +5,9 @@ import java.io.InputStreamReader;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        TodoManager tdm = new TodoManager();
-        TodoUI todoUI = new TodoUI();
+        TodoManager todoManager = new TodoManager();
+        TodoUI todoUI = new TodoUI(todoManager);
 
-        todoUI.start(tdm);
+        todoUI.run();
     }
 }
