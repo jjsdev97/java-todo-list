@@ -30,7 +30,14 @@ public class TodoManager {
 
 
     public int removeToDoList(int input) {
-        return (toDoListMap.remove(input) != null) ? input : -1;
+
+        if(toDoListMap.containsKey(input)){
+            toDoListMap.remove(input);
+            toDoListStatusMap.remove(input);
+
+            return input;
+        }
+        return -1;
     }
 
     public ArrayList<Integer> getKeyArray(){
