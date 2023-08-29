@@ -2,16 +2,17 @@ package org.homework;
 
 import java.util.*;
 
+
 public class TodoManager {
     private int idCnt = 1;
     private HashMap<Integer, String> toDoListMap = new HashMap<>();
     private HashMap<Integer, String> toDoListStatusMap = new HashMap<>();
 
 
+
     public int addToDoList(String inputStr) {
         return (toDoListMap.put(idCnt, inputStr)==null) ? idCnt++ : -1;
     }
-
 
     public int doneToDoList(int input) {
 
@@ -26,6 +27,7 @@ public class TodoManager {
 
         return -1;
     }
+
 
     public int removeToDoList(int input) {
         return (toDoListMap.remove(input) != null) ? input : -1;
@@ -69,5 +71,4 @@ public class TodoManager {
     }
 
 }
-
 

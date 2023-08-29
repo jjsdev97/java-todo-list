@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+
 public class TodoUI  {
     private TodoManager toDoManager = null;
     private final static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -19,6 +20,7 @@ public class TodoUI  {
             try{
                 System.out.println("옵션을 선택하세요: 1. 추가, 2. 할 일 완료, 3. 삭제, 4. 조회(ID), 5. 전체 조회, 6. 전체 조회(정렬), " +
                         "7. 검색, 8. 종료");
+
                 OptionEnum option = OptionEnum.of(br.readLine());
 
                 switch(option){
@@ -54,7 +56,6 @@ public class TodoUI  {
     }
 
 
-
     private void add() throws Exception {
         System.out.print("할 일의 내용을 입력 : ");
 
@@ -65,6 +66,7 @@ public class TodoUI  {
             System.out.println("할 일을 추가하는데 실패했습니다.");
         }
     }
+
 
     private void done() throws Exception {
         System.out.println("완료 할 일의 ID를 입력");
@@ -96,6 +98,7 @@ public class TodoUI  {
     private void view() throws Exception {
         System.out.println("조회할 할 일의 ID를 입력");
         int input = isNumber(br.readLine());
+
 
         if(!printToDoList(input)){
             System.out.println("해당 ID의 할 일이 없습니다.");
@@ -160,6 +163,7 @@ public class TodoUI  {
     }
 
 
+
     public int isNumber(String inputData){
         try {
             return Integer.parseInt(inputData);
@@ -167,6 +171,7 @@ public class TodoUI  {
             throw new NumberFormatException("잘못된 입력입니다.");
         }
     }
+
 
     public boolean printToDoList(int input){
 
@@ -181,4 +186,5 @@ public class TodoUI  {
 
         return false;
     }
+
 }
