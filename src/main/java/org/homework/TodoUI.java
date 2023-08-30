@@ -7,18 +7,21 @@ import java.util.Comparator;
 
 
 public class TodoUI  {
-    private TodoManager toDoManager = null;
+
+    private Todo todo;
+    private TodoManager toDoManager;
     private final static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-    TodoUI(TodoManager toDoManager){
+    TodoUI(Todo todo, TodoManager toDoManager){
+        this.todo = todo;
         this.toDoManager = toDoManager;
     }
 
     public void run() throws Exception{
         while(true) {
             try{
-                System.out.println("옵션을 선택하세요: 1. 추가, 2. 할 일 완료, 3. 삭제, 4. 조회(ID), 5. 전체 조회, 6. 전체 조회(정렬), " +
-                        "7. 검색, 8. 종료");
+                System.out.println("--옵션을 선택하세요: 1. 추가, 2. 할 일 완료, 3. 삭제, 4. 조회(ID), 5. 전체 조회, 6. 전체 조회(정렬), " +
+                        "7. 검색, 8. 종료--");
 
                 OptionEnum option = OptionEnum.of(br.readLine());
 
@@ -97,9 +100,8 @@ public class TodoUI  {
     private void view() throws Exception {
         System.out.println("조회할 할 일의 ID를 입력");
         int input = isNumber(br.readLine());
-
-
-        if(!printToDoList(input)){
+        
+        if(!printToDo(input)){
             System.out.println("해당 ID의 할 일이 없습니다.");
         }
 
@@ -107,42 +109,16 @@ public class TodoUI  {
 
     private void viewAll() {
         ArrayList<Integer> keyArr = toDoManager.getKeyArray();
-
-        if(keyArr.size()==0) {
-            System.out.println("ToDoList가 비어있습니다.");
-            return;
-        }
-
-        for(int key : keyArr){
-            printToDoList(key);
-        }
+        printToDoList(keyArr);
     }
 
     private void viewSort() throws Exception {
-        ArrayList<Integer> keyArr = toDoManager.getKeyArray();
-
-        if(keyArr.size()==0) {
-            System.out.println("ToDoList가 비어있습니다.");
-            return;
-        }
-
         System.out.println("내림차순, 오름차순 정렬을 선택하세요 (1:오름차순, 2:내림차순)");
         SortOptionEnum option = SortOptionEnum.of(br.readLine());
 
-        switch(option){
-            case DESC:
-                keyArr.sort(Comparator.reverseOrder());
-                break;
-            case ASC:
-                keyArr.sort(Comparator.naturalOrder());
-                break;
-        }
-
-        for(int key : keyArr){
-            printToDoList(key);
-        }
-
+        printToDoList(toDoManager.sortKeyArray(option.name()));
     }
+
 
 
     private void search() throws Exception {
@@ -151,14 +127,7 @@ public class TodoUI  {
 
         ArrayList<Integer> searchResultArr = toDoManager.search(keyword);
 
-        if(searchResultArr.size()==0) {
-            System.out.println("키워드를 포함하는 할 일이 없습니다.");
-            return;
-        }
-
-        for(int key : searchResultArr){
-            printToDoList(key);
-        }
+        printToDoList(searchResultArr);
     }
 
 
@@ -172,7 +141,7 @@ public class TodoUI  {
     }
 
 
-    public boolean printToDoList(int input){
+    public boolean printToDo(int input){
 
         if(toDoManager.hasToDoList(input)){
             String content = toDoManager.getContent(input);
@@ -185,5 +154,18 @@ public class TodoUI  {
 
         return false;
     }
+
+    private void printToDoList(ArrayList<Integer> keyArr) {
+        if(keyArr.size()==0) {
+            System.out.println("조회할 데이터가 없습니다.");
+            return;
+        }
+
+        for(int key : keyArr){
+            printToDo(key);
+        }
+    }
+
+
 
 }

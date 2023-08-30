@@ -5,23 +5,23 @@ import java.util.*;
 
 public class TodoManager {
     private int idCnt = 1;
-    private HashMap<Integer, String> toDoListMap = new HashMap<>();
-    private HashMap<Integer, String> toDoListStatusMap = new HashMap<>();
+    private HashMap<Integer, Todo> toDoListMap = new HashMap<>();
 
 
 
     public int addToDoList(String inputStr) {
-        return (toDoListMap.put(idCnt, inputStr)==null) ? idCnt++ : -1;
+        Todo todo = new Todo();
+        todo.setContent(inputStr);
+        return (toDoListMap.put(idCnt, todo)==null) ? idCnt++ : -1;
     }
 
     public int doneToDoList(int input) {
 
-        if(toDoListStatusMap.containsKey(input)){
-            return 0;
-        }
-
         if(toDoListMap.containsKey(input)) {
-            toDoListStatusMap.put(input, "[완료]");
+            if(toDoListMap.get(input).isStatus()){
+                return 0;
+            }
+            toDoListMap.get(input).changeStatus();
             return input;
         }
 
@@ -33,7 +33,6 @@ public class TodoManager {
 
         if(toDoListMap.containsKey(input)){
             toDoListMap.remove(input);
-            toDoListStatusMap.remove(input);
 
             return input;
         }
@@ -52,24 +51,36 @@ public class TodoManager {
         return keyArr;
     }
 
+    public ArrayList<Integer> sortKeyArray(String option){
+        ArrayList<Integer> keyArr = getKeyArray();
+
+        if(option.equals("DESC")){
+            keyArr.sort(Comparator.reverseOrder());
+        }else if(option.equals("ASC")){
+            keyArr.sort(Comparator.naturalOrder());
+        }
+
+        return keyArr;
+    }
+
 
     public boolean hasToDoList(int input) {
         return toDoListMap.containsKey(input);
     }
 
     public String getContent(int input) {
-        return toDoListMap.get(input);
+        return toDoListMap.get(input).getContent();
     }
 
     public String getIsDone(int input) {
-        return toDoListStatusMap.containsKey(input) ? toDoListStatusMap.get(input) : "";
+        return toDoListMap.get(input).isStatus() ? "[완료]" : "";
     }
 
     public ArrayList<Integer> search(String keyword) {
         ArrayList<Integer> result = new ArrayList<>();
 
         for(int key : toDoListMap.keySet()){
-            if(toDoListMap.get(key).contains(keyword)){
+            if(toDoListMap.get(key).getContent().contains(keyword)){
                 result.add(key);
             }
         }
