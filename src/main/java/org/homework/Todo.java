@@ -4,6 +4,10 @@ public class Todo {
     private String content;
     private boolean status = false;
 
+    public Todo(String inputStr) {
+        this.content = inputStr;
+    }
+
     public String getContent() {
         return content;
     }
