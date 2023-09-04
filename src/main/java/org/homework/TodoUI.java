@@ -3,17 +3,13 @@ package org.homework;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Comparator;
 
 
 public class TodoUI  {
-
-    private Todo todo;
     private TodoManager toDoManager;
     private final static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-    TodoUI(Todo todo, TodoManager toDoManager){
-        this.todo = todo;
+    TodoUI(TodoManager toDoManager){
         this.toDoManager = toDoManager;
     }
 
