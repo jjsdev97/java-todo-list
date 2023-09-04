@@ -10,8 +10,7 @@ public class TodoManager {
 
 
     public int addToDoList(String inputStr) {
-        Todo todo = new Todo();
-        todo.setContent(inputStr);
+        Todo todo = new Todo(inputStr);
         return (toDoListMap.put(idCnt, todo)==null) ? idCnt++ : -1;
     }
 
@@ -40,13 +39,7 @@ public class TodoManager {
     }
 
     public ArrayList<Integer> getKeyArray(){
-        ArrayList<Integer> keyArr = new ArrayList<>();
-
-        Set<Integer> keySet = toDoListMap.keySet();
-
-        for(int key : keySet){
-            keyArr.add(key);
-        }
+        ArrayList<Integer> keyArr = new ArrayList<>(toDoListMap.keySet());
 
         return keyArr;
     }
@@ -80,7 +73,7 @@ public class TodoManager {
         ArrayList<Integer> result = new ArrayList<>();
 
         for(int key : toDoListMap.keySet()){
-            if(toDoListMap.get(key).getContent().contains(keyword)){
+            if(toDoListMap.get(key).getContent().contains(keyword)){ // todo에서 contain 처리하라는 뜻인듯??
                 result.add(key);
             }
         }
