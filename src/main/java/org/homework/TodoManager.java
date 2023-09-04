@@ -7,35 +7,32 @@ public class TodoManager {
     private int idCnt = 1;
     private HashMap<Integer, Todo> toDoListMap = new HashMap<>();
 
-
-
     public int addToDoList(String inputStr) {
         Todo todo = new Todo(inputStr);
-        return (toDoListMap.put(idCnt, todo)==null) ? idCnt++ : -1;
+        toDoListMap.put(idCnt, todo);
+        return idCnt++;
     }
 
     public int doneToDoList(int input) {
+        Todo todo = toDoListMap.get(input);
 
-        if(toDoListMap.containsKey(input)) {
-            if(toDoListMap.get(input).isStatus()){
-                return 0;
-            }
-            toDoListMap.get(input).changeStatus();
-            return input;
+        if(todo==null) throw new RuntimeException("해당 ID의 할 일이 없습니다.");
+
+        if(todo.isTodo()){
+            toDoListMap.get(input).done();
+        }else if(todo.isDone()){
+            throw new RuntimeException("이미 완료한 할 일입니다.");
         }
 
-        return -1;
+        return input;
     }
 
 
     public int removeToDoList(int input) {
+        if(!toDoListMap.containsKey(input)) throw new RuntimeException("해당 ID의 할 일이 없습니다.");
 
-        if(toDoListMap.containsKey(input)){
-            toDoListMap.remove(input);
-
-            return input;
-        }
-        return -1;
+        toDoListMap.remove(input);
+        return input;
     }
 
     public ArrayList<Integer> getKeyArray(){
@@ -57,23 +54,19 @@ public class TodoManager {
     }
 
 
-    public boolean hasToDoList(int input) {
+    public boolean hasTodo(int input) {
         return toDoListMap.containsKey(input);
     }
 
-    public String getContent(int input) {
-        return toDoListMap.get(input).getContent();
-    }
-
-    public String getIsDone(int input) {
-        return toDoListMap.get(input).isStatus() ? "[완료]" : "";
+    public Todo getTodo(int input) {
+        return toDoListMap.get(input);
     }
 
     public ArrayList<Integer> search(String keyword) {
         ArrayList<Integer> result = new ArrayList<>();
 
         for(int key : toDoListMap.keySet()){
-            if(toDoListMap.get(key).getContent().contains(keyword)){ // todo에서 contain 처리하라는 뜻인듯??
+            if(toDoListMap.get(key).isContainKeyword(keyword)){
                 result.add(key);
             }
         }
