@@ -58,48 +58,44 @@ public class TodoUI  {
         System.out.print("할 일의 내용을 입력 : ");
 
         int result = toDoManager.addToDoList(br.readLine());
-        if(result>0){
-            System.out.printf("할 일이 추가되었습니다. ID: %d\n", result);
-        }else {
-            System.out.println("할 일을 추가하는데 실패했습니다.");
-        }
+        System.out.printf("할 일이 추가되었습니다. ID: %d\n", result);
     }
 
 
     private void done() throws Exception {
         System.out.println("완료 할 일의 ID를 입력");
 
-        int result = toDoManager.doneToDoList(isNumber(br.readLine()));
-
-        if(result>0){
+        try {
+            int result = toDoManager.doneToDoList(isNumber(br.readLine()));
             System.out.printf("할 일이 완료되었습니다. ID: %d\n", result);
-        }else if(result==0){
-            System.out.println("이미 완료한 할 일입니다.");
-        }else {
-            System.out.println("해당 ID의 할 일이 없습니다.");
+        }catch (RuntimeException e){
+            System.out.println(e.getMessage());
         }
-
     }
 
     private void delete() throws Exception {
         System.out.println("삭제할 할 일의 ID를 입력");
 
-        int result = toDoManager.removeToDoList(isNumber(br.readLine()));
-
-        if(result==-1){
-            System.out.println("해당 ID의 할 일이 없습니다.");
-        }else if(result>0){
+        try{
+            int result = toDoManager.removeToDoList(isNumber(br.readLine()));
             System.out.printf("할 일이 삭제되었습니다. ID: %d\n", result);
+        }catch (RuntimeException e){
+            System.out.println(e.getMessage());
         }
+
+
     }
 
     private void view() throws Exception {
         System.out.println("조회할 할 일의 ID를 입력");
         int input = isNumber(br.readLine());
-        
-        if(!printToDo(input)){
-            System.out.println("해당 ID의 할 일이 없습니다.");
+
+        if(toDoManager.hasTodo(input)){
+            printToDo(input);
+            return;
         }
+        System.out.println("해당 ID의 할 일이 없습니다.");
+
 
     }
 
@@ -137,18 +133,9 @@ public class TodoUI  {
     }
 
 
-    public boolean printToDo(int input){
-
-        if(toDoManager.hasToDoList(input)){
-            String content = toDoManager.getContent(input);
-            String isDone = toDoManager.getIsDone(input);
-
-            System.out.printf("할 일 ID: %d , 내용: %s %s\n", input, content, isDone);
-
-            return true;
-        }
-
-        return false;
+    public void printToDo(int input){
+        Todo todo = toDoManager.getTodo(input);
+        System.out.printf("할 일 ID: %d , 내용: %s %s\n", input, todo.getContent(), todo.getStatus());
     }
 
     private void printToDoList(ArrayList<Integer> keyArr) {
