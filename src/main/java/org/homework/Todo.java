@@ -12,6 +12,10 @@ public class Todo {
         return content;
     }
 
+    public boolean isContainKeyword(String keyword) {
+        return content.contains(keyword);
+    }
+
     public void setContent(String content) {
         this.content = content;
     }
