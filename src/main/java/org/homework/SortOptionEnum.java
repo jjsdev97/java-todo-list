@@ -1,18 +1,18 @@
 package org.homework;
 
-enum OptionEnum {
-    ADD("1"), DONE("2"), DELETE("3"), VIEW("4"),
-    VIEWALL("5"), VIEWSORT("6"), SEARCH("7"), EXIT("8");
+enum SortOptionEnum {
+
+    DESC("1"), ASC("2");
 
     private final String input;
-    OptionEnum(String input) {
+    SortOptionEnum(String input) {
         this.input = input;
     }
 
 
-    public static OptionEnum of(String input) {
+    public static SortOptionEnum of(String input) {
 
-        for(OptionEnum value : OptionEnum.values()){
+        for(SortOptionEnum value : SortOptionEnum.values()){
             if(value.input.equals(input)){
                 return value;
             }
