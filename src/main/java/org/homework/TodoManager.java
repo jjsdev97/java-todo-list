@@ -18,9 +18,9 @@ public class TodoManager {
 
         if(todo==null) throw new RuntimeException("해당 ID의 할 일이 없습니다.");
 
-        if(todo.isTodo()){
+        if(todo.getStatus().isTodo()){
             toDoListMap.get(input).done();
-        }else if(todo.isDone()){
+        }else if(todo.getStatus().isDone()){
             throw new RuntimeException("이미 완료한 할 일입니다.");
         }
 

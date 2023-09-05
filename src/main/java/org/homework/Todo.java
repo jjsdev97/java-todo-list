@@ -20,31 +20,20 @@ public class Todo {
         this.content = content;
     }
 
-    public boolean isTodo() {
-        return status.name().equals("TODO");
-    }
     public void todo(){
         this.status = StatusEnum.TODO;
-    }
-
-    public boolean isDone() {
-        return this.status.name().equals("DONE");
     }
 
     public void done(){
         this.status = StatusEnum.DONE;
     }
 
-    public boolean isDoing() {
-        return this.status.name().equals("DOING");
-    }
-
     public void doing(){
         this.status = StatusEnum.DOING;
     }
 
-    public String getStatus(){
-        return status.getStatus();
+    public StatusEnum getStatus(){
+        return status;
     }
 
 

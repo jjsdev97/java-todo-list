@@ -8,9 +8,23 @@ enum StatusEnum {
         this.status = status;
     }
 
-    public String getStatus(){
+    public String getStatusStr(){
         return status;
     }
+
+    public boolean isTodo() {
+        return this == TODO;
+    }
+
+    public boolean isDone() {
+        return this == DONE;
+    }
+
+    public boolean isDoing() {
+        return this == DOING;
+    }
+
+
 
 
 }

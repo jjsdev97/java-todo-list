@@ -135,7 +135,7 @@ public class TodoUI  {
 
     public void printToDo(int input){
         Todo todo = toDoManager.getTodo(input);
-        System.out.printf("할 일 ID: %d , 내용: %s %s\n", input, todo.getContent(), todo.getStatus());
+        System.out.printf("할 일 ID: %d , 내용: %s %s\n", input, todo.getContent(), todo.getStatus().getStatusStr());
     }
 
     private void printToDoList(ArrayList<Integer> keyArr) {
