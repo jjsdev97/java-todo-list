@@ -36,9 +36,7 @@ public class TodoManager {
     }
 
     public ArrayList<Integer> getKeyArray(){
-        ArrayList<Integer> keyArr = new ArrayList<>(toDoListMap.keySet());
-
-        return keyArr;
+        return new ArrayList<>(toDoListMap.keySet());
     }
 
     public ArrayList<Integer> sortKeyArray(String option){
