@@ -1,10 +1,12 @@
 package org.homework;
 
 public class Todo {
+    private int id;
     private String content;
     private StatusEnum status = StatusEnum.TODO; // TODO, DOING, DONE,
 
-    public Todo(String inputStr) {
+    public Todo(int id, String inputStr) {
+        this.id = id;
         this.content = inputStr;
     }
 
@@ -36,5 +38,12 @@ public class Todo {
         return status;
     }
 
+    public int getId(){
+        return id;
+    }
+    @Override
+    public String toString() {
+        return String.format("할 일 ID: %d , 내용: %s %s", id, content, status.getStatusStr());
+    }
 
 }
