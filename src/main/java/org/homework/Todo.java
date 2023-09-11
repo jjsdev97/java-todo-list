@@ -10,16 +10,9 @@ public class Todo {
         this.content = inputStr;
     }
 
-    public String getContent() {
-        return content;
-    }
 
     public boolean isContainKeyword(String keyword) {
         return content.contains(keyword);
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     public void todo(){
