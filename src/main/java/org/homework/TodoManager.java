@@ -1,6 +1,7 @@
 package org.homework;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class TodoManager {
@@ -8,7 +9,7 @@ public class TodoManager {
     private HashMap<Integer, Todo> toDoListMap = new HashMap<>();
 
     public int addToDoList(String inputStr) {
-        Todo todo = new Todo(inputStr);
+        Todo todo = new Todo(idCnt, inputStr);
         toDoListMap.put(idCnt, todo);
         return idCnt++;
     }
@@ -27,7 +28,6 @@ public class TodoManager {
         return input;
     }
 
-
     public int removeToDoList(int input) {
         if(!toDoListMap.containsKey(input)) throw new RuntimeException("해당 ID의 할 일이 없습니다.");
 
@@ -35,41 +35,35 @@ public class TodoManager {
         return input;
     }
 
-    public ArrayList<Integer> getKeyArray(){
-        return new ArrayList<>(toDoListMap.keySet());
+    public List<Todo> getTodoList() {
+        return new ArrayList<>(toDoListMap.values());
     }
 
-    public ArrayList<Integer> sortKeyArray(String option){
-        ArrayList<Integer> keyArr = getKeyArray();
+
+    public List<Todo> sortTodoList(String option){
+        List<Todo> todoList = getTodoList();
+
+
 
         if(option.equals("DESC")){
-            keyArr.sort(Comparator.reverseOrder());
-        }else if(option.equals("ASC")){
-            keyArr.sort(Comparator.naturalOrder());
+            return todoList.stream()
+                    .sorted(Comparator.comparingInt(Todo::getId).reversed())
+                    .collect(Collectors.toList());
         }
 
-        return keyArr;
-    }
-
-
-    public boolean hasTodo(int input) {
-        return toDoListMap.containsKey(input);
+        return todoList;
     }
 
     public Todo getTodo(int input) {
+        if(!toDoListMap.containsKey(input)) throw new RuntimeException("해당 ID의 할 일이 없습니다.");
         return toDoListMap.get(input);
     }
 
-    public ArrayList<Integer> search(String keyword) {
-        ArrayList<Integer> result = new ArrayList<>();
+    public List<Todo> search(String keyword) {
+        return getTodoList().stream()
+                .filter(todo -> todo.isContainKeyword(keyword) == true)
+                .collect(Collectors.toList());
 
-        for(int key : toDoListMap.keySet()){
-            if(toDoListMap.get(key).isContainKeyword(keyword)){
-                result.add(key);
-            }
-        }
-
-        return result;
     }
 
 }
