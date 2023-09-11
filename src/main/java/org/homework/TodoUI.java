@@ -3,12 +3,12 @@ package org.homework;
 import java.io.IOException;
 
 public class TodoUI  {
-    private TodoManager toDoManager;
+    private TodoRepository toDoRepositoryMap;
     private InputView inputView;
     private TodoView todoView;
 
-    TodoUI(TodoManager toDoManager, InputView inputView, TodoView todoView){
-        this.toDoManager = toDoManager;
+    TodoUI(TodoRepository toDoRepositoryMap, InputView inputView, TodoView todoView){
+        this.toDoRepositoryMap = toDoRepositoryMap;
         this.inputView = inputView;
         this.todoView = todoView;
     }
@@ -59,45 +59,45 @@ public class TodoUI  {
     private void add() throws Exception {
         System.out.print("할 일의 내용을 입력 : ");
 
-        todoView.showAddResult(toDoManager.addToDoList(inputView.getTodoDetails()));
+        todoView.showAddResult(toDoRepositoryMap.addToDoList(inputView.getTodoDetails()));
     }
 
 
     private void done() throws Exception {
         System.out.println("완료 할 일의 ID를 입력");
 
-        todoView.showDoneResult(toDoManager.doneToDoList(inputView.getInputNumber()));
+        todoView.showDoneResult(toDoRepositoryMap.doneToDoList(inputView.getInputNumber()));
     }
 
     private void delete() throws Exception {
         System.out.println("삭제할 할 일의 ID를 입력");
 
-        todoView.showDeleteResult(toDoManager.removeToDoList(inputView.getInputNumber()));
+        todoView.showDeleteResult(toDoRepositoryMap.removeToDoList(inputView.getInputNumber()));
     }
 
     private void view() throws Exception {
         System.out.println("조회할 할 일의 ID를 입력");
-        todoView.showToDo(toDoManager.getTodo(inputView.getInputNumber()));
+        todoView.showToDo(toDoRepositoryMap.getTodo(inputView.getInputNumber()));
 
     }
 
     private void viewAll(){
-        todoView.showToDos(toDoManager.getTodoList());
+        todoView.showToDos(toDoRepositoryMap.getTodoList());
     }
 
     private void viewSort() throws Exception {
         System.out.println("내림차순, 오름차순 정렬을 선택하세요 (1:오름차순, 2:내림차순)");
-        todoView.showToDos(toDoManager.sortTodoList(inputView.getSortOption().name()));
+        todoView.showToDos(toDoRepositoryMap.sortTodoList(inputView.getSortOption()));
     }
 
     private void viewStatus() throws IOException {
         System.out.println("상태를 선택하세요. (1: 할 일, 2: 하는 중, 3: 완료)");
-        todoView.showToDos(toDoManager.statusTodoList(inputView.getStatusOption().name()));
+        todoView.showToDos(toDoRepositoryMap.statusTodoList(inputView.getStatusOption()));
     }
 
 
     private void search() throws Exception {
         System.out.println("검색할 키워드를 입력해주세요");
-        todoView.showToDos(toDoManager.search(inputView.getSearchKeyword()));
+        todoView.showToDos(toDoRepositoryMap.search(inputView.getSearchKeyword()));
     }
 }
