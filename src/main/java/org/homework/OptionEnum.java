@@ -2,7 +2,7 @@ package org.homework;
 
 enum OptionEnum {
     ADD("1"), DONE("2"), DELETE("3"), VIEW("4"),
-    VIEWALL("5"), VIEWSORT("6"), SEARCH("7"), EXIT("8");
+    VIEWALL("5"), VIEWSORT("6"), VIEWSTATUS("7"), SEARCH("8"), EXIT("9");
 
     private final String input;
     OptionEnum(String input) {

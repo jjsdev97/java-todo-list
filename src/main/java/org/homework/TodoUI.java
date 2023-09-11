@@ -1,5 +1,7 @@
 package org.homework;
 
+import java.io.IOException;
+
 public class TodoUI  {
     private TodoManager toDoManager;
     private InputView inputView;
@@ -15,7 +17,7 @@ public class TodoUI  {
         while(true) {
             try{
                 System.out.println("--옵션을 선택하세요: 1. 추가, 2. 할 일 완료, 3. 삭제, 4. 조회(ID), 5. 전체 조회, 6. 전체 조회(정렬), " +
-                        "7. 검색, 8. 종료--");
+                        "7. 전체 조회(상태), 8. 검색, 9. 종료--");
 
                 switch(inputView.getUserAction()){
                     case ADD:
@@ -36,6 +38,9 @@ public class TodoUI  {
                     case VIEWSORT:
                         viewSort();
                         break;
+                    case VIEWSTATUS:
+                        viewStatus();
+                        break;
                     case SEARCH:
                         search();
                         break;
@@ -48,6 +53,7 @@ public class TodoUI  {
             }
         }
     }
+
 
 
     private void add() throws Exception {
@@ -83,6 +89,12 @@ public class TodoUI  {
         System.out.println("내림차순, 오름차순 정렬을 선택하세요 (1:오름차순, 2:내림차순)");
         todoView.showToDos(toDoManager.sortTodoList(inputView.getSortOption().name()));
     }
+
+    private void viewStatus() throws IOException {
+        System.out.println("상태를 선택하세요. (1: 할 일, 2: 하는 중, 3: 완료)");
+        todoView.showToDos(toDoManager.statusTodoList(inputView.getStatusOption().name()));
+    }
+
 
     private void search() throws Exception {
         System.out.println("검색할 키워드를 입력해주세요");

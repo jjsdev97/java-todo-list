@@ -23,6 +23,10 @@ public class InputView {
         return SortOptionEnum.of(br.readLine());
     }
 
+    public StatusSelectOptionEnum getStatusOption() throws IOException{
+        return StatusSelectOptionEnum.of(br.readLine());
+    }
+
     public String getSearchKeyword() throws IOException {
         //추가 로직
         return br.readLine();

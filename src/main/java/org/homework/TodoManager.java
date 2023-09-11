@@ -41,17 +41,28 @@ public class TodoManager {
 
 
     public List<Todo> sortTodoList(String option){
-        List<Todo> todoList = getTodoList();
-
-
-
         if(option.equals("DESC")){
-            return todoList.stream()
+            return getTodoList().stream()
                     .sorted(Comparator.comparingInt(Todo::getId).reversed())
                     .collect(Collectors.toList());
         }
 
-        return todoList;
+        return getTodoList();
+    }
+
+    public List<Todo> statusTodoList(String option) {
+
+        switch(option){
+            case "TODO":
+                return getTodoList().stream().filter(todo -> todo.getStatus().isTodo()==true).collect(Collectors.toList());
+            case "DOING":
+                return getTodoList().stream().filter(todo -> todo.getStatus().isDoing()==true).collect(Collectors.toList());
+            case "DONE":
+                return getTodoList().stream().filter(todo -> todo.getStatus().isDone()==true).collect(Collectors.toList());
+        }
+
+        return getTodoList();
+
     }
 
     public Todo getTodo(int input) {
@@ -65,6 +76,7 @@ public class TodoManager {
                 .collect(Collectors.toList());
 
     }
+
 
 }
 
