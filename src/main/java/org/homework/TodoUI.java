@@ -7,10 +7,14 @@ import java.util.ArrayList;
 
 public class TodoUI  {
     private TodoManager toDoManager;
+    private InputView inputView;
+    private TodoView todoView;
     private final static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-    TodoUI(TodoManager toDoManager){
+    TodoUI(TodoManager toDoManager, InputView inputView, TodoView todoView){
         this.toDoManager = toDoManager;
+        this.inputView = inputView;
+        this.todoView = todoView;
     }
 
     public void run() throws Exception{

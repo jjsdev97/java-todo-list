@@ -3,7 +3,9 @@ package org.homework;
 public class Main {
     public static void main(String[] args) throws Exception {
         TodoManager todoManager = new TodoManager();
-        TodoUI todoUI = new TodoUI(todoManager);
+        InputView inputView = new InputView();
+        TodoView todoView = new TodoView();
+        TodoUI todoUI = new TodoUI(todoManager, inputView, todoView);
 
         todoUI.run();
     }
