@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
-public class TodoManager {
+public class MapTodoRepository implements TodoRepository {
     private int idCnt = 1;
     private HashMap<Integer, Todo> toDoListMap = new HashMap<>();
 
@@ -40,8 +40,8 @@ public class TodoManager {
     }
 
 
-    public List<Todo> sortTodoList(String option){
-        if(option.equals("DESC")){
+    public List<Todo> sortTodoList(SortOptionEnum option){
+        if(option==SortOptionEnum.DESC){
             return getTodoList().stream()
                     .sorted(Comparator.comparingInt(Todo::getId).reversed())
                     .collect(Collectors.toList());
@@ -50,14 +50,14 @@ public class TodoManager {
         return getTodoList();
     }
 
-    public List<Todo> statusTodoList(String option) {
+    public List<Todo> statusTodoList(StatusSelectOptionEnum option) {
 
         switch(option){
-            case "TODO":
+            case TODO:
                 return getTodoList().stream().filter(todo -> todo.getStatus().isTodo()==true).collect(Collectors.toList());
-            case "DOING":
+            case DOING:
                 return getTodoList().stream().filter(todo -> todo.getStatus().isDoing()==true).collect(Collectors.toList());
-            case "DONE":
+            case DONE:
                 return getTodoList().stream().filter(todo -> todo.getStatus().isDone()==true).collect(Collectors.toList());
         }
 
