@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="todoListMapper">
+
+    <insert id="add" parameterType="todo">
+        INSERT INTO TODOLIST
+        VALUES (#{id}, #{content}, #{status})
+    </insert>
+
+    <select id="checkIdCnt" resultType="int">
+        SELECT NVL(MAX(ID), 0)+1 FROM TODOLIST
+    </select>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM TODOLIST WHERE ID = #{id}
+    </delete>
+
+    <select id="getTodo" parameterType="int" resultType="todo">
+        SELECT *
+        FROM TODOLIST
+        WHERE ID = #{id}
+    </select>
+
+    <update id="done" parameterType="todo">
+        UPDATE TODOLIST
+        SET STATUS = #{status}
+        WHERE ID = ${id}
+    </update>
+
+    <select id="getTodoList" resultType="todo">
+        SELECT *
+        FROM TODOLIST
+    </select>
+
+</mapper>
