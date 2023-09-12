@@ -12,7 +12,9 @@ public class InputView {
     }
 
     public String getTodoDetails() throws IOException {
-        return br.readLine();
+        String inputStr = br.readLine();
+        if(inputStr.trim().length()==0) throw new RuntimeException("내용을 입력해주세요.");
+        return inputStr;
     }
 
     public int getInputNumber() throws IOException {
