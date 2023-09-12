@@ -1,4 +1,6 @@
-package org.homework;
+package org.homework.entity;
+
+import org.homework.constant.StatusEnum;
 
 public class Todo {
     private int id;

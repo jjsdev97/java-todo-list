@@ -1,4 +1,9 @@
-package org.homework;
+package org.homework.controller;
+
+import org.homework.repository.TodoRepository;
+import org.homework.view.TodoView;
+import org.homework.view.InputView;
+
 
 import java.io.IOException;
 
@@ -7,7 +12,7 @@ public class TodoUI  {
     private InputView inputView;
     private TodoView todoView;
 
-    TodoUI(TodoRepository toDoRepositoryMap, InputView inputView, TodoView todoView){
+    public TodoUI(TodoRepository toDoRepositoryMap, InputView inputView, TodoView todoView){
         this.toDoRepositoryMap = toDoRepositoryMap;
         this.inputView = inputView;
         this.todoView = todoView;

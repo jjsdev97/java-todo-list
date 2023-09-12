@@ -1,6 +1,6 @@
-package org.homework;
+package org.homework.constant;
 
-enum OptionEnum {
+public enum OptionEnum {
     ADD("1"), DONE("2"), DELETE("3"), VIEW("4"),
     VIEWALL("5"), VIEWSORT("6"), VIEWSTATUS("7"), SEARCH("8"), EXIT("9");
 

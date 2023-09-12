@@ -1,4 +1,8 @@
-package org.homework;
+package org.homework.view;
+
+import org.homework.constant.OptionEnum;
+import org.homework.constant.SortOptionEnum;
+import org.homework.constant.StatusSelectOptionEnum;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,6 @@
-package org.homework;
+package org.homework.view;
+
+import org.homework.entity.Todo;
 
 import java.util.List;
 

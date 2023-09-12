@@ -1,6 +1,6 @@
-package org.homework;
+package org.homework.constant;
 
-enum SortOptionEnum {
+public enum SortOptionEnum {
 
     DESC("1"), ASC("2");
 

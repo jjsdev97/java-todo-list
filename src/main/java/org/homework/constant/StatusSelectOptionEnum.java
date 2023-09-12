@@ -1,6 +1,6 @@
-package org.homework;
+package org.homework.constant;
 
-enum StatusSelectOptionEnum {
+public enum StatusSelectOptionEnum {
 
     TODO("1"), DOING("2"), DONE("3");
 
