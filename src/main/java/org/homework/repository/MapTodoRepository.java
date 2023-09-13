@@ -1,9 +1,6 @@
 package org.homework.repository;
 
-import org.homework.constant.SortOptionEnum;
-import org.homework.constant.StatusSelectOptionEnum;
 import org.homework.entity.Todo;
-import org.homework.service.TodoService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,53 +9,45 @@ import java.util.List;
 
 public class MapTodoRepository implements TodoRepository {
     private int idCnt = 1;
-    private HashMap<Integer, Todo> toDoListMap = new HashMap<>();
-    TodoService todoService = null;
+    private HashMap<Integer, Todo> todoListMap = new HashMap<>();
 
-    public MapTodoRepository(TodoService todoService) {
-        this.todoService = todoService;
-    }
-
-    public int addToDoList(String inputStr) {
-        Todo todo = new Todo(idCnt, inputStr);
-        toDoListMap.put(idCnt, todo);
+    @Override
+    public int save(String todoContent) {
+        Todo todo = new Todo(idCnt, todoContent);
+        todoListMap.put(idCnt, todo);
         return idCnt++;
     }
 
-    public int doneToDoList(int input) {
-        Todo todo = toDoListMap.get(input);
-        todoService.existsTodo(todo);
-        todoService.doneTodo(todo);
-        return input;
+    @Override
+    public Todo findById(int input) {
+        return todoListMap.get(input);
     }
 
-    public int removeToDoList(int input) {
-        todoService.existsTodo(input, toDoListMap);
-        toDoListMap.remove(input);
-        return input;
+    @Override
+    public int updateById(Todo todo) {
+        int id = todo.getId();
+        todoListMap.replace(id, todo);
+        return id;
     }
 
-    public List<Todo> getTodoList() {
-        return new ArrayList<>(toDoListMap.values());
+    @Override
+    public int deleteById(int id) {
+        todoListMap.remove(id);
+        return id;
+    }
+
+    @Override
+    public List<Todo> findAll() {
+        return new ArrayList<>(todoListMap.values());
     }
 
 
-    public List<Todo> sortTodoList(SortOptionEnum option){
-        return todoService.sortTodoList(option, getTodoList());
-    }
 
-    public List<Todo> statusTodoList(StatusSelectOptionEnum option) {
-        return todoService.statusFilterTodoList(option, getTodoList());
-    }
 
-    public Todo getTodo(int input) {
-        todoService.existsTodo(input, toDoListMap);
-        return toDoListMap.get(input);
-    }
 
-    public List<Todo> search(String keyword) {
-        return todoService.searchTodoList(keyword, getTodoList());
-    }
+
+
+
 
 
 }

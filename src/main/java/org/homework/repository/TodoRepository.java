@@ -1,26 +1,20 @@
 package org.homework.repository;
 
-import org.homework.constant.SortOptionEnum;
-import org.homework.constant.StatusSelectOptionEnum;
 import org.homework.entity.Todo;
 
 import java.util.List;
 
 public interface TodoRepository {
-    public int addToDoList(String inputStr);
+    public int save(String todoContent);
 
-    public int doneToDoList(int input);
+    public int updateById(Todo input);
 
-    public int removeToDoList(int input);
+    public int deleteById(int input);
 
-    public List<Todo> getTodoList();
+    public List<Todo> findAll();
 
-    public List<Todo> sortTodoList(SortOptionEnum option);
+    public Todo findById(int input);
 
-    public List<Todo> statusTodoList(StatusSelectOptionEnum option);
 
-    public Todo getTodo(int input);
-
-    public List<Todo> search(String keyword);
 
 }

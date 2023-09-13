@@ -4,22 +4,14 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.homework.constant.SortOptionEnum;
-import org.homework.constant.StatusSelectOptionEnum;
 import org.homework.entity.Todo;
-import org.homework.service.TodoService;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
 
 public class OracleTodoRepository implements TodoRepository {
-    TodoService todoService = null;
     private int idCnt = checkIdCnt();
-
-    public OracleTodoRepository(TodoService todoService) {
-        this.todoService = todoService;
-    }
 
     private SqlSession getSession() {
         SqlSession session = null;
@@ -49,8 +41,10 @@ public class OracleTodoRepository implements TodoRepository {
         return result;
     }
 
-    public int addToDoList(String inputStr) {
-        Todo todo = new Todo(idCnt, inputStr);
+    @Override
+    public int save(String todoContent) {
+        Todo todo = new Todo(idCnt, todoContent);
+
         try(SqlSession session = getSession()) {
             session.insert("todoListMapper.add", todo);
 
@@ -61,10 +55,23 @@ public class OracleTodoRepository implements TodoRepository {
         return idCnt++;
     }
 
-    public int doneToDoList(int input) {
-        Todo todo = getTodo(input);
-        todoService.doneTodo(todo);
+    @Override
+    public Todo findById(int id) {
+        Todo todo = null;
 
+        try(SqlSession session = getSession()) {
+            todo = session.selectOne("todoListMapper.getTodo", id);
+
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+
+        return todo;
+    }
+
+    @Override
+    public int updateById(Todo todo) {
         try(SqlSession session = getSession()) {
             session.update("todoListMapper.done", todo);
 
@@ -73,11 +80,11 @@ public class OracleTodoRepository implements TodoRepository {
             e.printStackTrace();
         }
 
-        return input;
+        return todo.getId();
     }
 
-    public int removeToDoList(int id) {
-        getTodo(id);
+    @Override
+    public int deleteById(int id) {
         try(SqlSession session = getSession()) {
             session.delete("todoListMapper.delete", id);
 
@@ -89,22 +96,8 @@ public class OracleTodoRepository implements TodoRepository {
         return id;
     }
 
-    public Todo getTodo(int id) {
-        Todo todo = null;
-
-        try(SqlSession session = getSession()) {
-            todo = session.selectOne("todoListMapper.getTodo", id);
-
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-
-        todoService.existsTodo(todo);
-        return todo;
-    }
-
-    public List<Todo> getTodoList() {
+    @Override
+    public List<Todo> findAll() {
         List<Todo> todoList = null;
 
         try(SqlSession session = getSession()) {
@@ -118,16 +111,8 @@ public class OracleTodoRepository implements TodoRepository {
         return todoList;
     }
 
-    public List<Todo> sortTodoList(SortOptionEnum option){
-        return todoService.sortTodoList(option, getTodoList());
-    }
 
-    public List<Todo> statusTodoList(StatusSelectOptionEnum option) {
-        return todoService.statusFilterTodoList(option, getTodoList());
-    }
 
-    public List<Todo> search(String keyword) {
-        return todoService.searchTodoList(keyword, getTodoList());
-    }
+
 
 }
