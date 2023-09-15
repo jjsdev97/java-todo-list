@@ -93,7 +93,7 @@ public class TodoController {
         System.out.println("조회할 할 일의 ID를 입력");
 
         int inputId = inputView.getInputNumber();
-        Todo getTodoResult = todoService.getTodo(inputId);
+        Todo getTodoResult = todoService.findById(inputId);
         todoView.showToDo(getTodoResult);
     }
 
