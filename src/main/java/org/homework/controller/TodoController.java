@@ -1,10 +1,14 @@
 package org.homework.controller;
 
+import org.homework.constant.SortOptionEnum;
+import org.homework.constant.StatusSelectOptionEnum;
+import org.homework.entity.Todo;
 import org.homework.service.TodoService;
 import org.homework.view.InputView;
 import org.homework.view.TodoView;
 
 import java.io.IOException;
+import java.util.List;
 
 public class TodoController {
     private TodoService todoService;
@@ -63,46 +67,61 @@ public class TodoController {
     private void add() throws Exception {
         System.out.print("할 일의 내용을 입력 : ");
 
-//        todoView.showAddResult(toDoRepositoryMap.addToDoList(inputView.getTodoDetails()));
-        todoView.showAddResult(todoService.addTodoList(inputView.getTodoDetails()));
+        String inputContent = inputView.getTodoDetails();
+        int addTodoResult = todoService.addTodoList(inputContent);
+        todoView.showAddResult(addTodoResult);
     }
 
 
     private void done() throws Exception {
         System.out.println("완료 할 일의 ID를 입력");
 
-        todoView.showDoneResult(todoService.doneTodo(inputView.getInputNumber()));
+        int inputId = inputView.getInputNumber();
+        int doneTodoResult = todoService.doneTodo(inputId);
+        todoView.showDoneResult(doneTodoResult);
     }
 
     private void delete() throws Exception {
         System.out.println("삭제할 할 일의 ID를 입력");
 
-        todoView.showDeleteResult(todoService.removeTodo(inputView.getInputNumber()));
+        int inputId = inputView.getInputNumber();
+        int removeTodoResult = todoService.removeTodo(inputId);
+        todoView.showDeleteResult(removeTodoResult);
     }
 
     private void view() throws Exception {
         System.out.println("조회할 할 일의 ID를 입력");
-        todoView.showToDo(todoService.getTodo(inputView.getInputNumber()));
 
+        int inputId = inputView.getInputNumber();
+        Todo getTodoResult = todoService.getTodo(inputId);
+        todoView.showToDo(getTodoResult);
     }
 
     private void viewAll(){
-        todoView.showToDos(todoService.getTodoList());
+        List<Todo> getTodoListResult = todoService.getTodoList();
+        todoView.showToDos(getTodoListResult);
     }
 
     private void viewSort() throws Exception {
         System.out.println("내림차순, 오름차순 정렬을 선택하세요 (1:오름차순, 2:내림차순)");
-        todoView.showToDos(todoService.sortTodoList(inputView.getSortOption()));
+
+        SortOptionEnum inputOption = inputView.getSortOption();
+        List<Todo> getSortTodoListResult = todoService.sortTodoList(inputOption);
+        todoView.showToDos(getSortTodoListResult);
     }
 
     private void viewStatus() throws IOException {
         System.out.println("상태를 선택하세요. (1: 할 일, 2: 하는 중, 3: 완료)");
-        todoView.showToDos(todoService.statusFilterTodoList(inputView.getStatusOption()));
+        StatusSelectOptionEnum inputOption = inputView.getStatusOption();
+        List<Todo> statusFilterTodoListResult = todoService.statusFilterTodoList(inputOption);
+        todoView.showToDos(statusFilterTodoListResult);
     }
 
 
     private void search() throws Exception {
         System.out.println("검색할 키워드를 입력해주세요");
-        todoView.showToDos(todoService.searchTodoList(inputView.getSearchKeyword()));
+        String inputKeyword = inputView.getSearchKeyword();
+        List<Todo> searchTodoListResult = todoService.searchTodoList(inputKeyword);
+        todoView.showToDos(searchTodoListResult);
     }
 }
