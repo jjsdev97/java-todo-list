@@ -1,6 +1,6 @@
-package org.homework;
+package org.homework.constant;
 
-enum StatusEnum {
+public enum StatusEnum {
     TODO(""), DOING("[진행중]"), DONE("[완료]");
 
     private final String status;
@@ -23,6 +23,8 @@ enum StatusEnum {
     public boolean isDoing() {
         return this == DOING;
     }
+
+
 
 
 

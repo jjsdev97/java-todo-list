@@ -1,11 +1,25 @@
 package org.homework;
 
-public class Main {
-    public static void main(String[] args) throws Exception {
-        TodoManager todoManager = new TodoManager();
-        TodoUI todoUI = new TodoUI(todoManager);
+import org.homework.controller.TodoController;
+import org.homework.repository.MapTodoRepository;
+import org.homework.repository.OracleTodoRepository;
+import org.homework.repository.TodoRepository;
+import org.homework.service.TodoService;
+import org.homework.view.InputView;
+import org.homework.view.TodoView;
 
-        todoUI.run();
+public class Main {
+    public static void main(String[] args) {
+        TodoRepository mapTodoRepository = new MapTodoRepository();
+        TodoRepository oracleTodoRepository = new OracleTodoRepository();
+
+        TodoService todoService = new TodoService(oracleTodoRepository);
+
+        InputView inputView = new InputView();
+        TodoView todoView = new TodoView();
+        TodoController todoController = new TodoController(todoService, inputView, todoView);
+
+        todoController.run();
     }
 }
 
