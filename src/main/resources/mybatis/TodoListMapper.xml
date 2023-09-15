@@ -5,13 +5,15 @@
 <mapper namespace="todoListMapper">
 
     <insert id="add" parameterType="todo">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            SELECT TODO_SEQ.NEXTVAL FROM DUAL
+        </selectKey>
         INSERT INTO TODOLIST
         VALUES (#{id}, #{content}, #{status})
+
     </insert>
 
-    <select id="checkIdCnt" resultType="int">
-        SELECT NVL(MAX(ID), 0)+1 FROM TODOLIST
-    </select>
+
 
     <delete id="delete" parameterType="int">
         DELETE FROM TODOLIST WHERE ID = #{id}

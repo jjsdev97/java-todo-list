@@ -11,7 +11,6 @@ import java.io.Reader;
 import java.util.List;
 
 public class OracleTodoRepository implements TodoRepository {
-    private int idCnt = checkIdCnt();
 
     private SqlSession getSession() {
         SqlSession session = null;
@@ -29,22 +28,10 @@ public class OracleTodoRepository implements TodoRepository {
     }
 
 
-    public int checkIdCnt() {
-        int result = 0;
-        try(SqlSession session = getSession()) {
-            result = session.selectOne("todoListMapper.checkIdCnt");
-
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-        return result;
-    }
 
     @Override
     public int save(String todoContent) {
-        Todo todo = new Todo(idCnt, todoContent);
-
+        Todo todo = new Todo(0, todoContent);
         try(SqlSession session = getSession()) {
             session.insert("todoListMapper.add", todo);
 
@@ -52,7 +39,7 @@ public class OracleTodoRepository implements TodoRepository {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-        return idCnt++;
+        return todo.getId();
     }
 
     @Override
