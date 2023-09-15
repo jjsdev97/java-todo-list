@@ -42,7 +42,4 @@ public class Todo {
         return String.format("할 일 ID: %d , 내용: %s %s", id, content, status.getStatusStr());
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 }
