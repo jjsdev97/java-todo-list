@@ -12,7 +12,6 @@ public class Todo {
         this.content = inputStr;
     }
 
-
     public boolean isContainKeyword(String keyword) {
         return content.contains(keyword);
     }
@@ -24,15 +23,21 @@ public class Todo {
     public void done(){
         this.status = StatusEnum.DONE;
     }
-
     public void doing(){
         this.status = StatusEnum.DOING;
     }
 
-    public StatusEnum getStatus(){
-        return status;
+    public boolean isDone(){
+        return status.isDone();
     }
 
+    public boolean isTodo(){
+        return status.isTodo();
+    }
+
+    public boolean isDoing() {
+        return status.isDoing();
+    }
 
     public int getId(){
         return id;
