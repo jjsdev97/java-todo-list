@@ -19,7 +19,7 @@ public class TodoService {
         return todoRepository.save(todoContent);
     }
 
-    public Todo getTodo(int id) {
+    public Todo findById(int id) {
         Todo todo = todoRepository.findById(id);
         if(todo==null) throw new RuntimeException("해당 ID의 할 일이 없습니다.");
 
@@ -27,8 +27,8 @@ public class TodoService {
     }
 
     public int doneTodo(int id) {
-        Todo todo = getTodo(id);
-        if(todo.getStatus().isDone()) throw new RuntimeException("이미 완료한 할 일입니다.");
+        Todo todo = findById(id);
+        if(todo.isDone()) throw new RuntimeException("이미 완료한 할 일입니다.");
 
         todo.done();
         todoRepository.updateById(todo);
@@ -37,7 +37,7 @@ public class TodoService {
     }
 
     public int removeTodo(int id) {
-        getTodo(id);
+        findById(id);
         todoRepository.deleteById(id);
 
         return id;
@@ -45,7 +45,6 @@ public class TodoService {
 
     public List<Todo> getTodoList() {
         List<Todo> todoList = todoRepository.findAll();
-        if(todoList.size() < 1) throw new RuntimeException("조회할 데이터가 없습니다.");
         return todoList;
     }
 
@@ -71,11 +70,17 @@ public class TodoService {
 
         switch(option){
             case TODO:
-                return todoList.stream().filter(todo -> todo.getStatus().isTodo()==true).collect(Collectors.toList());
+                return todoList.stream()
+                        .filter(todo -> todo.isTodo())
+                        .collect(Collectors.toList());
             case DOING:
-                return todoList.stream().filter(todo -> todo.getStatus().isDoing()==true).collect(Collectors.toList());
+                return todoList.stream()
+                        .filter(todo -> todo.isDoing())
+                        .collect(Collectors.toList());
             case DONE:
-                return todoList.stream().filter(todo -> todo.getStatus().isDone()==true).collect(Collectors.toList());
+                return todoList.stream()
+                        .filter(todo -> todo.isDone())
+                        .collect(Collectors.toList());
         }
 
         return todoList;
@@ -85,7 +90,7 @@ public class TodoService {
         List<Todo> todoList = getTodoList();
 
         return todoList.stream()
-                .filter(todo -> todo.isContainKeyword(keyword) == true)
+                .filter(todo -> todo.isContainKeyword(keyword))
                 .collect(Collectors.toList());
     }
 
