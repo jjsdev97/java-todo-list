@@ -1,5 +1,7 @@
 package org.homework.constant;
 
+import java.util.Arrays;
+
 public enum SortOptionEnum {
 
     DESC("1"), ASC("2");
@@ -11,13 +13,9 @@ public enum SortOptionEnum {
 
 
     public static SortOptionEnum of(String input) {
-
-        for(SortOptionEnum value : SortOptionEnum.values()){
-            if(value.input.equals(input)){
-                return value;
-            }
-        }
-
-        throw new RuntimeException("잘못된 입력입니다.");
+        return Arrays.stream(SortOptionEnum.values())
+                .filter(value -> value.input.equals(input))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("잘못된 입력입니다."));
     }
 }

@@ -1,5 +1,7 @@
 package org.homework.constant;
 
+import java.util.Arrays;
+
 public enum OptionEnum {
     ADD("1"), DONE("2"), DELETE("3"), VIEW("4"),
     VIEWALL("5"), VIEWSORT("6"), VIEWSTATUS("7"), SEARCH("8"), EXIT("9");
@@ -11,13 +13,9 @@ public enum OptionEnum {
 
 
     public static OptionEnum of(String input) {
-
-        for(OptionEnum value : OptionEnum.values()){
-            if(value.input.equals(input)){
-                return value;
-            }
-        }
-
-        throw new RuntimeException("잘못된 입력입니다.");
+        return Arrays.stream(OptionEnum.values())
+                .filter(value -> value.input.equals(input))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("잘못된 입력입니다."));
     }
 }
